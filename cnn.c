@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/time.h>
+#include <math.h>
 #include "lenet_cnn_float.h"
 /*
 parametres
@@ -155,4 +156,14 @@ void Fc2_400_10(	float 	input[FC1_NBOUTPUT], 			        // IN
             output[k]+=input[i]*kernel[k][i];
         }
         if(output[k]<0) output[k]=0;
+}
+/*
+parametres
+vector_in:10
+vector_out:10
+*/
+void Softmax(float vector_in[FC2_NBOUTPUT], float vector_out[FC2_NBOUTPUT]){
+    float sum=0;
+    for(int i=0;i<FC2_NBOUTPUT;i++) sum+=expf(vector_in[i]);
+    for(int i=0;i<FC2_NBOUTPUT;i++) vector_out[i]=expf(vector_in[i])/sum;
 }
